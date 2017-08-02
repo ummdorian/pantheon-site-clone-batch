@@ -38,4 +38,19 @@ IF "%createBackup%"=="y" (
 	call terminus backup:create !oldSiteMachineName!.live
 )
 
+:: View Backup List
+set /p viewBackups="View Backups for a Site? (y/n)"
+IF "%viewBackups%"=="y" (
+	set /p oldSiteMachineName="Enter Site Machine Name: "
+	call terminus backup:list !oldSiteMachineName!.live
+)
+
+:: Get Backup URL
+set /p getBackup="Get Backup Url? (y/n)"
+IF "%getBackup%"=="y" (
+	set /p backupFileName="Enter Backup File Name: "
+	set /p oldSiteMachineName="Enter Site Machine Name: "
+	call terminus backup:get --file !backupFileName! !oldSiteMachineName!.live
+)
+
 pause > null
