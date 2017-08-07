@@ -77,10 +77,23 @@ IF "%downloadFiles%"=="y" (
 	7z x "!repoFolder!/*.tar" -aoa -o"!repoFolder!"
 	call DIR !repoFolder!
 	set /p extractedFolder="Enter Extracted Folder Name: "
+	call RMDIR "%CD%\!repoFolder!\!extractedFolder!\.git" /s
 	call xcopy "%CD%\!repoFolder!\!extractedFolder!\*" "%CD%\!repoFolder!" /e /y /q
 	call RMDIR "%CD%\!repoFolder!\!extractedFolder!" /s
 	call del "%CD%\!repoFolder!\!extractedFolder!.tar"
 	call del "%CD%\!repoFolder!\code.tar.gz"
+)
+
+:: Commit and push
+set /p doCommit="Commit and push to new site repo? (y/n)"
+IF "%doCommit%"=="y" (
+	set /p repoFolder="Enter Repo Folder Name: "
+	call cd !repoFolder!
+	call git checkout master
+	call git add -A
+	call git commit -m"cloned site commit"
+	call git config http.sslVerify "false"
+	call git push origin master
 )
 
 
