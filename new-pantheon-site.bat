@@ -31,6 +31,20 @@ IF "%viewSiteList%"=="y" (
 	call terminus site:list
 )
 
+:: Get connection info for new site
+set /p getConnectionInfo="Get Connection Info For New Site? (y/n)"
+IF "%getConnectionInfo%"=="y" (
+	set /p newSiteMachineName="Enter Site Machine Name: "
+	call terminus connection:info !newSiteMachineName!.dev
+)
+
+:: Paste Git Clone Command
+set /p pasteGitClone="Clone new site repo? (y/n)"
+IF "%pasteGitClone%"=="y" (
+	set /p newSiteMachineName="Paste Git Clone Command: "
+	call !newSiteMachineName!
+)
+
 :: Create Backup of old site to import
 set /p createBackup="Create Backup of a Site? (y/n)"
 IF "%createBackup%"=="y" (
@@ -52,5 +66,25 @@ IF "%getBackup%"=="y" (
 	set /p oldSiteMachineName="Enter Site Machine Name: "
 	call terminus backup:get --file !backupFileName! !oldSiteMachineName!.live
 )
+
+:: Download and extract code
+set /p downloadFiles="Download and Extract Code Backup? (y/n)"
+IF "%downloadFiles%"=="y" (
+	set /p backupUrl="Enter Files Backup URL: "
+	set /p repoFolder="Enter Repo Folder Name: "
+	curl -o "!repoFolder!/code.tar.gz" "!backupUrl!"
+	7z x "!repoFolder!/code.tar.gz" -aoa -o"!repoFolder!"
+	7z x "!repoFolder!/*.tar" -aoa -o"!repoFolder!"
+	call DIR !repoFolder!
+	set /p extractedFolder="Enter Extracted Folder Name: "
+	call xcopy "%CD%\!repoFolder!\!extractedFolder!\*" "%CD%\!repoFolder!" /e /y /q
+	call RMDIR "%CD%\!repoFolder!\!extractedFolder!" /s
+	call del "%CD%\!repoFolder!\!extractedFolder!.tar"
+	call del "%CD%\!repoFolder!\code.tar.gz"
+)
+
+
+:: Echo "done on completion"
+echo done
 
 pause > null
