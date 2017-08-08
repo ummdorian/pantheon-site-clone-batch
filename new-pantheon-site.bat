@@ -96,6 +96,22 @@ IF "%doCommit%"=="y" (
 	call git push origin master
 )
 
+:: Import Database
+set /p importDatabase="Import database backup? (y/n)"
+IF "%importDatabase%"=="y" (
+	set /p site="Enter Site and eviornment (ie site.dev): "
+	set /p dbURL="Enter db url: "
+	call terminus import:database !site! '"!dbURL!"'
+)
+
+:: Import Files
+set /p importFiles="Import files backup? (y/n)"
+IF "%importFiles%"=="y" (
+	set /p site="Enter Site and eviornment (ie site.dev): "
+	set /p dbURL="Enter file backup url: "
+	call terminus import:files !site! '"!dbURL!"'
+)
+
 
 :: Echo "done on completion"
 echo done
