@@ -49,14 +49,16 @@ IF "%pasteGitClone%"=="y" (
 set /p createBackup="Create Backup of a Site? (y/n)"
 IF "%createBackup%"=="y" (
 	set /p oldSiteMachineName="Enter Site Machine Name: "
-	call terminus backup:create !oldSiteMachineName!.live
+	set /p oldSiteEnviornment="Enter Site Enviornment: "
+	call terminus backup:create !oldSiteMachineName!.!oldSiteEnviornment!
 )
 
 :: View Backup List
 set /p viewBackups="View Backups for a Site? (y/n)"
 IF "%viewBackups%"=="y" (
 	set /p oldSiteMachineName="Enter Site Machine Name: "
-	call terminus backup:list !oldSiteMachineName!.live
+	set /p oldSiteEnviornment="Enter Site Enviornment Name: "
+	call terminus backup:list !oldSiteMachineName!.!oldSiteEnviornment!
 )
 
 :: Get Backup URL
@@ -64,7 +66,8 @@ set /p getBackup="Get Backup Url? (y/n)"
 IF "%getBackup%"=="y" (
 	set /p backupFileName="Enter Backup File Name: "
 	set /p oldSiteMachineName="Enter Site Machine Name: "
-	call terminus backup:get --file !backupFileName! !oldSiteMachineName!.live
+	set /p oldSiteEnviornment="Enter Site Enviornment Name: "
+	call terminus backup:get --file !backupFileName! !oldSiteMachineName!.!oldSiteEnviornment!
 )
 
 :: Download and extract code
@@ -96,18 +99,52 @@ IF "%doCommit%"=="y" (
 	call git push origin master
 )
 
+:: View Backup List
+set /p viewBackups="View Backups for a Site? (y/n)"
+IF "%viewBackups%"=="y" (
+	set /p oldSiteMachineName="Enter Site Machine Name: "
+	set /p oldSiteEnviornment="Enter Site Enviornment Name: "
+	call terminus backup:list !oldSiteMachineName!.!oldSiteEnviornment!
+)
+
+:: Get Backup URL
+set /p getBackup="Get Backup Url? (y/n)"
+IF "%getBackup%"=="y" (
+	set /p backupFileName="Enter Backup File Name: "
+	set /p oldSiteMachineName="Enter Site Machine Name: "
+	set /p oldSiteEnviornment="Enter Site Enviornment Name: "
+	call terminus backup:get --file !backupFileName! !oldSiteMachineName!.!oldSiteEnviornment!
+)
+
 :: Import Database
 set /p importDatabase="Import database backup? (y/n)"
 IF "%importDatabase%"=="y" (
-	set /p site="Enter Site and eviornment (ie site.dev): "
+	set /p site="Enter new site and eviornment (ie site.dev): "
 	set /p dbURL="Enter db url: "
 	call terminus import:database !site! '"!dbURL!"'
+)
+
+:: View Backup List
+set /p viewBackups="View Backups for a Site? (y/n)"
+IF "%viewBackups%"=="y" (
+	set /p oldSiteMachineName="Enter Site Machine Name: "
+	set /p oldSiteEnviornment="Enter Site Enviornment Name: "
+	call terminus backup:list !oldSiteMachineName!.!oldSiteEnviornment!
+)
+
+:: Get Backup URL
+set /p getBackup="Get Backup Url? (y/n)"
+IF "%getBackup%"=="y" (
+	set /p backupFileName="Enter Backup File Name: "
+	set /p oldSiteMachineName="Enter Site Machine Name: "
+	set /p oldSiteEnviornment="Enter Site Enviornment Name: "
+	call terminus backup:get --file !backupFileName! !oldSiteMachineName!.!oldSiteEnviornment!
 )
 
 :: Import Files
 set /p importFiles="Import files backup? (y/n)"
 IF "%importFiles%"=="y" (
-	set /p site="Enter Site and eviornment (ie site.dev): "
+	set /p site="Enter new site and eviornment (ie site.dev): "
 	set /p dbURL="Enter file backup url: "
 	call terminus import:files !site! '"!dbURL!"'
 )
