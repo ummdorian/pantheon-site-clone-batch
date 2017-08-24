@@ -54,7 +54,7 @@ IF "%createBackup%"=="y" (
 )
 
 :: View Backup List
-set /p viewBackups="View Backups for a Site? (y/n)"
+set /p viewBackups="View Backups for a Site (to find a code backup)? (y/n)"
 IF "%viewBackups%"=="y" (
 	set /p oldSiteMachineName="Enter Site Machine Name: "
 	set /p oldSiteEnviornment="Enter Site Enviornment Name: "
@@ -62,7 +62,7 @@ IF "%viewBackups%"=="y" (
 )
 
 :: Get Backup URL
-set /p getBackup="Get Backup Url? (y/n)"
+set /p getBackup="Get Backup Url (for a code backup)? (y/n)"
 IF "%getBackup%"=="y" (
 	set /p backupFileName="Enter Backup File Name: "
 	set /p oldSiteMachineName="Enter Site Machine Name: "
@@ -100,7 +100,7 @@ IF "%doCommit%"=="y" (
 )
 
 :: View Backup List
-set /p viewBackups="View Backups for a Site? (y/n)"
+set /p viewBackups="View Backups for a Site (to find a database backup)? (y/n)"
 IF "%viewBackups%"=="y" (
 	set /p oldSiteMachineName="Enter Site Machine Name: "
 	set /p oldSiteEnviornment="Enter Site Enviornment Name: "
@@ -108,7 +108,7 @@ IF "%viewBackups%"=="y" (
 )
 
 :: Get Backup URL
-set /p getBackup="Get Backup Url? (y/n)"
+set /p getBackup="Get Backup Url (for a database backup)? (y/n)"
 IF "%getBackup%"=="y" (
 	set /p backupFileName="Enter Backup File Name: "
 	set /p oldSiteMachineName="Enter Site Machine Name: "
@@ -125,7 +125,7 @@ IF "%importDatabase%"=="y" (
 )
 
 :: View Backup List
-set /p viewBackups="View Backups for a Site? (y/n)"
+set /p viewBackups="View Backups for a Site (to find a files backup)? (y/n)"
 IF "%viewBackups%"=="y" (
 	set /p oldSiteMachineName="Enter Site Machine Name: "
 	set /p oldSiteEnviornment="Enter Site Enviornment Name: "
@@ -133,7 +133,7 @@ IF "%viewBackups%"=="y" (
 )
 
 :: Get Backup URL
-set /p getBackup="Get Backup Url? (y/n)"
+set /p getBackup="Get Backup Url (for a files backup)? (y/n)"
 IF "%getBackup%"=="y" (
 	set /p backupFileName="Enter Backup File Name: "
 	set /p oldSiteMachineName="Enter Site Machine Name: "
