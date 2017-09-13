@@ -23,6 +23,7 @@ IF "%createNewSite%"=="y" (
     set /p newSiteMachineName="Enter New Site Machine Name: "
     set /p newSiteHumanName="Enter New Site Human Name: "
     call terminus site:create !newSiteMachineName! "!newSiteHumanName!" !upstreamHash!
+	call terminus connection:set !newSiteMachineName!.dev git
 )
 
 :: View Site List (to find machine name)
