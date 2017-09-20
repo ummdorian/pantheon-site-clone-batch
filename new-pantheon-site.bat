@@ -22,12 +22,13 @@ IF "%createNewSite%"=="y" (
     set /p upstreamHash="Enter Upstream Hash: "
     set /p newSiteMachineName="Enter New Site Machine Name: "
     set /p newSiteHumanName="Enter New Site Human Name: "
-    call terminus site:create !newSiteMachineName! "!newSiteHumanName!" !upstreamHash!
+    set /p newSiteOrgName="Enter New Site Org Name (ie adworkshop): "
+    call terminus site:create --org "!newSiteOrgName!" "!newSiteMachineName!" "!newSiteHumanName!" "!upstreamHash!"
 	call terminus connection:set !newSiteMachineName!.dev git
 )
 
 :: View Site List (to find machine name)
-set /p viewSiteList="View Site List? (y/n)"
+set /p viewSiteList="View Site List (to find machine name)? (y/n)"
 IF "%viewSiteList%"=="y" (
 	call terminus site:list
 )
@@ -118,11 +119,14 @@ IF "%getBackup%"=="y" (
 )
 
 :: Import Database
+:: Trying in sftp mode, because wasn't working in git mode
 set /p importDatabase="Import database backup? (y/n)"
 IF "%importDatabase%"=="y" (
 	set /p site="Enter new site and eviornment (ie site.dev): "
 	set /p dbURL="Enter db url: "
+	call terminus connection:set !site! sftp
 	call terminus import:database !site! '"!dbURL!"'
+	call terminus connection:set !site! git
 )
 
 :: View Backup List
@@ -143,11 +147,14 @@ IF "%getBackup%"=="y" (
 )
 
 :: Import Files
+:: Trying in sftp mode, because wasn't working in git mode
 set /p importFiles="Import files backup? (y/n)"
 IF "%importFiles%"=="y" (
 	set /p site="Enter new site and eviornment (ie site.dev): "
 	set /p dbURL="Enter file backup url: "
+	call terminus connection:set !site! sftp
 	call terminus import:files !site! '"!dbURL!"'
+	call terminus connection:set !site! git
 )
 
 
